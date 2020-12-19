@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   db:
     image: postgres
     container_name: exchange_pq
@@ -21,6 +20,7 @@ services:
       - "2181:2181"
     volumes:
       - ./data/volumes/log_zookeeper:/var/log/zookeeper
+
   kafka:
     image: wurstmeister/kafka:latest
     container_name: exchange_kafka
@@ -35,4 +35,3 @@ services:
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-
