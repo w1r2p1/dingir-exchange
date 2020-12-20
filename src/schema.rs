@@ -9,6 +9,7 @@ table! {
         params -> Text,
     }
 }
+
 table! {
     balance_history (id) {
         id -> Int8,
@@ -21,6 +22,7 @@ table! {
         detail -> Text,
     }
 }
+
 table! {
     order_history (id) {
         id -> Int8,
