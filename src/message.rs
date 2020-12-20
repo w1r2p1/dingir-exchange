@@ -13,10 +13,6 @@ use std::collections::LinkedList;
 use std::sync::Arc;
 use std::time::Duration;
 
-///
-/// sender
-///
-
 pub struct SimpleProducerContext;
 impl ClientContext for SimpleProducerContext {}
 impl ProducerContext for SimpleProducerContext {
@@ -195,30 +191,5 @@ impl MessageSender for KafkaMessageSender {
     fn push_balance_message(&mut self, balance: &BalanceMessage) -> SimpleResult {
         let message = serde_json::to_string(&balance)?;
         self.push_message(&message, BALANCES_TOPIC)
-    }
-}
-
-///
-/// fetcher
-///
-
-pub struct SimpleConsumerContext;
-// TODO: impl ClientContext for SimpleConsumerContext {}
-impl ConsumerContext for SimpleConsumerContext {
-    // TODO:
-}
-
-// TODO: should we embed it into sender?
-pub struct KafkaMessageFetcher {}
-
-impl KafkaMessageFetcher {
-    pub fn new(brokers: &str) -> Result<KafkaMessageFetcher> {
-        let consumer = ClientConfig::new()
-            .set("bootstrap.servers", brokers)
-            .set("queue.buffering.max.ms", "1")
-            .create_with_context(SimpleConsumerContext)?;
-        let arc = Arc::new(consumer);
-
-        Ok(KafkaMessageSender { consumer: arc })
     }
 }
