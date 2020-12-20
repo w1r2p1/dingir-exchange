@@ -36,6 +36,7 @@ pub struct Controller {
     pub asset_manager: AssetManager,
     pub update_controller: Rc<RefCell<BalanceUpdateController>>,
     pub markets: HashMap<String, market::Market>,
+    pub kline_manager: Rc<RefCell<KlineManager>>,
     pub log_handler: OperationLogSender,
 }
 
@@ -75,6 +76,8 @@ impl Controller {
             .unwrap();
             markets.insert(entry.name.clone(), market);
         }
+        // TODO:
+        let kline_manager = Rc::new(RefCell::new(KlineManager::new()));
         let log_handler = OperationLogSender::new(&DatabaseWriterConfig {
             database_url: settings.db_log.clone(),
             run_daemon: true,
@@ -87,6 +90,7 @@ impl Controller {
             balance_manager,
             update_controller,
             markets,
+            kline_manager,
             log_handler,
         }
     }
