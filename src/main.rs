@@ -64,7 +64,6 @@ async fn grpc_run() -> Result<(), Box<dyn std::error::Error>> {
         controller::G_STUB = &mut grpc_stub;
     }
     persist::init_persist_timer();
-    grpc_stub.kline_manager.run();
 
     let addr = "0.0.0.0:50051".parse().unwrap();
     let grpc = GrpcHandler {};
